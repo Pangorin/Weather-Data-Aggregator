@@ -12,7 +12,6 @@ weather_pipeline/
 ├── core/
 │   ├── extract.py
 │   ├── load.py
-│   ├── transform.py
 │   └── transform.py
 ├── docs/
 │   └── readme.md
