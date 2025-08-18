@@ -34,14 +34,14 @@ weather_pipeline/
 ## Phase 1: E - Extract (`extract.py`)
 - Connect to the OpenWeatherMap API and download the raw weather data for each city. Save this raw data without changing it.
 - Logic:
-    1. Load configuration: Read the secrets from the `.env` file.
-    2. Prepare a place for raw data: Create a directory to store the output.
-    3. Loop & fetch:
+    - Load configuration: Read the secrets from the `.env` file.
+    - Prepare a place for raw data: Create a directory to store the output.
+    - Loop & fetch:
         - Iterate through your list of cities.
         - For each city, construct the correct API URL. The OpenWeatherMap documentation will show you how.
         - Use the `requests` library to make a GET request to that URL.
-    4. Check for success: After making the request, check the HTTP status code. If it's `200 OK`, proceed. If not (e.g., `401 Unauthorized`, `404 Not Found`), should handle the error (printing a message, ...).
-    5. Save the raw data:
+    - Check for success: After making the request, check the HTTP status code. If it's `200 OK`, proceed. If not (e.g., `401 Unauthorized`, `404 Not Found`), should handle the error (printing a message, ...).
+    - Save the raw data:
         - If the request was successful, get the content of the response, which will be a JSON text string.
         - Save this JSON string to a file.
         - **Important**: Name the file something unique and descriptive. This prevent overwriting data and makes it easy to trace back.
