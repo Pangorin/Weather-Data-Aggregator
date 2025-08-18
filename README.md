@@ -45,3 +45,15 @@ weather_pipeline/
         - If the request was successful, get the content of the response, which will be a JSON text string.
         - Save this JSON string to a file.
         - **Important**: Name the file something unique and descriptive. This prevent overwriting data and makes it easy to trace back.
+
+## Phase 2: T - Transform (`transform.py`)
+- Read all the raw JSON files, clean them up, select only the necessary data, and structure it into a single, clean table format.
+- Logic:
+    - **Find raw files**: Get a list of all the `.json` files from the data directory.
+    - **Prepare for processed data**: Create a directory to store the processed data
+    - **Initialize a data list**: Create an empty Python list. This list will hold your clean data, with each item in the list representing one row (one city's weather reading).
+    - **Loop & transform**:
+        - Iterate through each raw JSON file.
+        - Open the file and parse the JSON content into a Python dictionary.
+        - **This is the core transformation work**:
+            - Flatten and select: The JSON is nested. Cherry-pick the specific fields you want.
