@@ -26,10 +26,19 @@ weather_pipeline/
     - `python-dotenv`
     - `requests`
     - `pandas`
+    - `SQLAlchemy`
+    - `mysql-connector-python`
 - Install them using `pip install -r requirements.txt`.
 
 4. Configuration (`.env` file):
 - In the `.env` file, store your secrets and configurations. **Never commit this file to Git**.
+
+5. Install and run a MySQL server, few options like:
+- **Local install**: Download and install MySQL Community Server directly onto machine.
+- **Docker**: This is preference, and often the easiest way. Can pull the official MySQL image and run it in a container.
+
+6. Create a database and user:
+- Connect to MySQL server using a command-line client or a GUI tool like DBeaver or MySQL Workbench. Run the following SQL commands to create a dedicated database and a user for the application.
 
 ## Phase 1: E - Extract (`extract.py`)
 - Connect to the OpenWeatherMap API and download the raw weather data for each city. Save this raw data without changing it.
@@ -57,3 +66,36 @@ weather_pipeline/
         - Open the file and parse the JSON content into a Python dictionary.
         - **This is the core transformation work**:
             - Flatten and select: The JSON is nested. Cherry-pick the specific fields you want.
+            - Example:
+                - `name` -> `city`
+                - `dt` -> `timestamp_utc` (it's a Unix timestamp, need to convert it).
+                - `main[temp]` -> `temperature_kelvin`
+                - `main[humidity]` -> `humidity_percent`
+                - `wind[speed]` -> `wind_speed_ms`
+                - `weather[0]['description']` -> `weather_description`
+            - Enrich/Engineer features: Create new, more useful data from the existing data.
+                - Convert `temperature_kelvin` into `temperature_celsius` and `temperature_fahrenheit`. The formulas are easy to find online.
+                - Convert the Unix `timestamp_utc` into a human-readable datetime string.
+            - Structure: Put all this cleaned data into a single, flat dictionary.
+        - Append this clean dictionary to your data list.
+    - **Consolidate**: Loop through all files, use `pandas` to convert your list of dictionaries into a DataFrame. This gives a nice tabular structure.
+    - **Save the clean data**: Save this single DataFrame to a CSV file in data directory.
+
+## Phase 3: L - Load (`load.py`)
+- Take the clean, processed data and load it into its final destination - a database. Use SQLite or any database, personal preference.
+    - **Connect to database and create the table**: Use MySQL database. Connect to the `weather_db` and run the `CREATE TABLE` statement once.
+    - **Load configuration**: Read the database credentials (`DB_HOST`, `DB_USER`, etc.) from the `.env` file.
+    - **Create a database connection engine**: Use SQLAlchemy's `create_engine` function. Construct a special "connection string" (also called a DSN) that tells SQLAlchemy how to find and log into the database. This engine object manages the connection pool to the database efficiently.
+    - **Read processed data**: Use `pandas` to read the processed data file into a DataFrame.
+    - **Load the data**: Use the powerful `.to_sql()` method from `pandas` to load the DataFrame into the MySQL database.
+        - Use the `df.to_sql()` and:
+            - `name`: `weather_readings` (must match your table name exactly).
+            - `con`: The SQLAlchemy engine object created before.
+            - `if_exists`: `'append'` (most important part).
+            - `index`: `False` (prevent saving the `pandas` DataFrame index as a column in the SQL table).
+        - **Crucially**, use the `if_exists='append'` argument. This tells `pandas` to add the new rows to the table if it already exists, rather than failing or overwriting it. This is what allows to build a historical dataset over time.
+
+## Putting it all together (`main.py`)
+- This script is the conductor of your orchestra.
+    - **Import**: Import the main functions from your `extract`, `transform`, and `load` scripts.
+    - **Execute in order**: Call the functions one by one.
