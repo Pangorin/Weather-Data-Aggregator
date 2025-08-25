@@ -13,25 +13,25 @@
     ],
     "base": "stations",
     "main": {
-        "temp": 305.68,
-        "feels_like": 309.05,
-        "temp_min": 305.68,
-        "temp_max": 305.68,
-        "pressure": 1013,
-        "humidity": 52,
-        "sea_level": 1013,
-        "grnd_level": 1011
+        "temp": 307.93,
+        "feels_like": 310.87,
+        "temp_min": 307.93,
+        "temp_max": 307.93,
+        "pressure": 1012,
+        "humidity": 43,
+        "sea_level": 1012,
+        "grnd_level": 1010
     },
     "visibility": 10000,
     "wind": {
-        "speed": 2.9,
-        "deg": 97,
-        "gust": 2.77
+        "speed": 2.87,
+        "deg": 132,
+        "gust": 2.44
     },
     "clouds": {
-        "all": 17
+        "all": 24
     },
-    "dt": 1756088510,
+    "dt": 1756092729,
     "sys": {
         "country": "JP",
         "sunrise": 1756066070,
