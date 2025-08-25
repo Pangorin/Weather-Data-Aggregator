@@ -1,0 +1,47 @@
+{
+    "coord": {
+        "lon": 105.8412,
+        "lat": 21.0245
+    },
+    "weather": [
+        {
+            "id": 502,
+            "main": "Rain",
+            "description": "heavy intensity rain",
+            "icon": "10d"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 301.31,
+        "feels_like": 304.71,
+        "temp_min": 301.31,
+        "temp_max": 301.31,
+        "pressure": 1006,
+        "humidity": 74,
+        "sea_level": 1006,
+        "grnd_level": 1006
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 8.96,
+        "deg": 18,
+        "gust": 14.57
+    },
+    "rain": {
+        "1h": 4.47
+    },
+    "clouds": {
+        "all": 99
+    },
+    "dt": 1756088820,
+    "sys": {
+        "country": "VN",
+        "sunrise": 1756075113,
+        "sunset": 1756120768
+    },
+    "timezone": 25200,
+    "id": 1581130,
+    "name": "Hanoi",
+    "cod": 200
+}

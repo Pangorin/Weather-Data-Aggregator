@@ -1,0 +1,4 @@
+city,timestamp_utc,temperature_celsius,temperature_fahrenheit,humidity_percent,wind_speed_ms,weather_description
+Tokyo,2025-08-25 02:21:50,32.53,90.55,52,2.9,few clouds
+New York,2025-08-25 02:22:20,21.99,71.58,85,4.58,overcast clouds
+Hanoi,2025-08-25 02:27:00,28.16,82.69,74,8.96,heavy intensity rain
